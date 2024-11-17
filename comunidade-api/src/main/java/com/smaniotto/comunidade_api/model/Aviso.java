@@ -15,7 +15,7 @@ public class Aviso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime cadastro;
 
     @Column(nullable = false)
@@ -26,4 +26,11 @@ public class Aviso {
 
     @Column(nullable = false, length = 1024)
     private String descricao;
+
+    public Aviso(LocalDateTime validade, String titulo, String descricao) {
+        this.validade = validade;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.cadastro = LocalDateTime.now();  // Set the 'cadastro' field to the current timestamp
+    }
 }

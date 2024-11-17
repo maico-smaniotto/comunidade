@@ -1,5 +1,6 @@
 package com.smaniotto.comunidade_api.controller;
 
+import com.smaniotto.comunidade_api.dto.AvisoDTO;
 import com.smaniotto.comunidade_api.model.Aviso;
 import com.smaniotto.comunidade_api.service.AvisoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,19 @@ public class AvisoController {
     }
 
     @PostMapping
-    public Aviso createAviso(@RequestBody Aviso aviso) {
-        return avisoService.save(aviso);
+    public Aviso createAviso(@RequestBody AvisoDTO avisoDTO) {
+        // Map the DTO to the entity
+        Aviso aviso = new Aviso(
+                avisoDTO.getValidade(),
+                avisoDTO.getTitulo(),
+                avisoDTO.getDescricao()
+        );
+
+        Aviso savedAviso = avisoService.save(aviso);
+
+//        return ResponseEntity.ok(savedAviso);
+
+        return avisoService.save(savedAviso);
     }
 
     @PutMapping("/{id}")
