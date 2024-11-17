@@ -3,6 +3,7 @@ package com.smaniotto.comunidade_api.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "avisos")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Aviso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Aviso {
     @Column(nullable = false)
     private LocalDateTime validade;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     private String titulo;
 
     @Column(nullable = false, length = 1024)
@@ -31,6 +33,6 @@ public class Aviso {
         this.validade = validade;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.cadastro = LocalDateTime.now();  // Set the 'cadastro' field to the current timestamp
+        this.cadastro = LocalDateTime.now();
     }
 }

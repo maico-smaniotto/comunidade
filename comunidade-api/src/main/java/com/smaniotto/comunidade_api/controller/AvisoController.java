@@ -44,10 +44,12 @@ public class AvisoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aviso> updateAviso(@PathVariable Long id, @RequestBody Aviso aviso) {
+    public ResponseEntity<Aviso> updateAviso(@PathVariable Long id, @RequestBody AvisoDTO avisoDTO) {
         return avisoService.findById(id)
-                .map(existingAviso -> {
-                    aviso.setId(existingAviso.getId());
+                .map(aviso -> {
+                    aviso.setValidade(avisoDTO.getValidade());
+                    aviso.setTitulo(avisoDTO.getTitulo());
+                    aviso.setDescricao(avisoDTO.getDescricao());
                     return ResponseEntity.ok(avisoService.save(aviso));
                 })
                 .orElse(ResponseEntity.notFound().build());
