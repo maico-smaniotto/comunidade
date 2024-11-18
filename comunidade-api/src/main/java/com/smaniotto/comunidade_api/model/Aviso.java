@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "avisos")
+@Table(
+    name = "avisos",
+    indexes = @Index(name = "idx_aviso_validade", columnList = "validade")
+)
 @Getter
 @Setter
 @NoArgsConstructor

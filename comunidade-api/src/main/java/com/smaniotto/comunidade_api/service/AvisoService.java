@@ -13,7 +13,7 @@ public class AvisoService {
     private AvisoRepository avisoRepository;
 
     public List<Aviso> findAll() {
-        return avisoRepository.findAll();
+        return avisoRepository.findAllNonExpired();
     }
 
     public Optional<Aviso> findById(Long id) {
