@@ -17,30 +17,55 @@ import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        android.util.Log.d("NetworkDebug", "Debugging Network...")
         setContent {
             MaterialTheme {
-                AvisosScreen()
+                AvisosScreen(
+                    AvisoViewModel().avisos.collectAsState().value
+
+//                    avisos = listOf(
+//                        Aviso(id = 1, cadastro = "20/11/2024", validade = "20/11/2024", titulo = "Aviso 1", descricao = "Descrição do aviso 1"),
+//                        Aviso(id = 1, cadastro = "20/11/2024", validade = "20/11/2024", titulo = "Aviso 2", descricao = "Descrição do aviso 2"),
+//                        Aviso(id = 1, cadastro = "20/11/2024", validade = "20/11/2024", titulo = "Aviso 3", descricao = "Descrição do aviso 3")
+//                    )
+                )
             }
         }
     }
 }
 
 @Composable
-fun AvisosScreen(viewModel: AvisoViewModel = viewModel()) {
-    val avisos by viewModel.avisos.collectAsState()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Avisos") })
-        }
-    ) { padding ->
-        LazyColumn(contentPadding = padding) {
-            items(avisos) { aviso ->
-                AvisoItem(aviso)
+fun AvisosScreen(avisos: List<Aviso>) {
+    Column {
+        Text(
+            text = "Avisos",
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.padding(16.dp)
+        )
+        LazyColumn {
+            items(avisos.size) { index ->
+                AvisoItem(aviso = avisos[index])
             }
         }
     }
 }
+
+//@Composable
+//fun AvisosScreen(viewModel: AvisoViewModel = viewModel()) {
+//    val avisos by viewModel.avisos.collectAsState()
+//
+//    Scaffold(
+//        topBar = {
+//            TopAppBar(title = { Text("Avisos") })
+//        }
+//    ) { padding ->
+//        LazyColumn(contentPadding = padding) {
+//            items(avisos) { aviso ->
+//                AvisoItem(aviso)
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun AvisoItem(aviso: Aviso) {
