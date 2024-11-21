@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkModule {
-    private const val BASE_URL = "http://192.168.1.147:8081"
+    private const val BASE_URL = "http://192.168.1.147:8081/api"
 
     val api: AvisoApi by lazy {
         Retrofit.Builder()
