@@ -28,7 +28,7 @@ public class AvisoController {
     }
 
     @PostMapping
-    public Aviso createAviso(@RequestBody AvisoDTO avisoDTO) {
+    public ResponseEntity<Aviso> createAviso(@RequestBody AvisoDTO avisoDTO) {
         // Map the DTO to the entity
         Aviso aviso = new Aviso(
                 avisoDTO.getValidade(),
@@ -38,9 +38,7 @@ public class AvisoController {
 
         Aviso savedAviso = avisoService.save(aviso);
 
-//        return ResponseEntity.ok(savedAviso);
-
-        return avisoService.save(savedAviso);
+        return ResponseEntity.ok(savedAviso);
     }
 
     @PutMapping("/{id}")
