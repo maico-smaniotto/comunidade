@@ -1,30 +1,28 @@
 package com.smaniotto.comunidade_api.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.google.cloud.Timestamp;
 
 @Entity
-@Table(
-    name = "avisos",
-    indexes = @Index(name = "idx_aviso_validade", columnList = "validade")
-)
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Aviso {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private LocalDateTime cadastro;
+    private Date cadastro = Timestamp.now().toDate();
 
     @Column(nullable = false)
-    private LocalDateTime validade;
+    private Date validade;
 
     @Column(nullable = false, length = 50)
     private String titulo;
@@ -32,10 +30,4 @@ public class Aviso {
     @Column(nullable = false, length = 1024)
     private String descricao;
 
-    public Aviso(LocalDateTime validade, String titulo, String descricao) {
-        this.validade = validade;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.cadastro = LocalDateTime.now();
-    }
 }

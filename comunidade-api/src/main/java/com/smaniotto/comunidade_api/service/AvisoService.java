@@ -2,29 +2,33 @@ package com.smaniotto.comunidade_api.service;
 
 import com.smaniotto.comunidade_api.model.Aviso;
 import com.smaniotto.comunidade_api.repository.AvisoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 @Service
 public class AvisoService {
-    @Autowired
+    
     private AvisoRepository avisoRepository;
 
-    public List<Aviso> findAll() {
-        return avisoRepository.findAllNonExpired();
+    public AvisoService(AvisoRepository avisoRepository) {
+        this.avisoRepository = avisoRepository;
     }
 
-    public Optional<Aviso> findById(Long id) {
-        return avisoRepository.findById(id);
+    public List<Aviso> listar() throws ExecutionException, InterruptedException {
+        return avisoRepository.listarNaoExpirados();
     }
 
-    public Aviso save(Aviso aviso) {
-        return avisoRepository.save(aviso);
+    public Optional<Aviso> buscarPorId(String id) throws ExecutionException, InterruptedException {
+        return avisoRepository.buscarPorId(id);
     }
 
-    public void deleteById(Long id) {
-        avisoRepository.deleteById(id);
+    public Aviso salvar(Aviso aviso) {
+        return avisoRepository.salvar(aviso);        
+    }    
+
+    public void excluir(String id) {
+        avisoRepository.excluir(id);
     }
 }
