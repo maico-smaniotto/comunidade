@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.smaniotto.comunidade_api.model.Cotacao;
@@ -24,25 +25,22 @@ public class CotacoesCotrirosaScraper {
         final String url = "https://cotrirosa.com";
         try {
             Document document = Jsoup.connect(url).get();
-
             Elements elementos = document.select(".menu-item-4319");
-
-            if (elementos.first() == null) {
-                System.out.println("Elemento não encontrado na página.");
+            Element elemento = elementos.first();
+            if (elemento == null) {
+                System.out.println("Elemento não encontrado.");
                 return;
-            }            
-            String texto = elementos.first().text();
-
-            extrairCotacoes(texto, lista);
-
+            }
+            extrairCotacoes(elemento, lista);
         } catch (Exception e) {
-            System.out.println("Erro ao acessar a URL: " + e.getMessage());
+            System.out.println("Erro ao extrair informações da página: " + e.getMessage());
         }
 
     }
 
-    private static void extrairCotacoes(String texto, List<Cotacao> lista) throws ParseException {
+    private static void extrairCotacoes(Element elemento, List<Cotacao> lista) throws ParseException {
 
+        String texto = elemento.text();
         Pattern patternData = Pattern.compile("(\\d{2}/\\d{2}/\\d{4})");
         Matcher matcherData = patternData.matcher(texto);
 

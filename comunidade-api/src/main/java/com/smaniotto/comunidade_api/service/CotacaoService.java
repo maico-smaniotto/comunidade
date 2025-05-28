@@ -15,11 +15,11 @@ import com.smaniotto.comunidade_api.service.scraper.CotacoesCotrirosaScraper;
 @Service
 public class CotacaoService {
     
-    private static CopyOnWriteArrayList<Cotacao> cacheList = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<Cotacao> listaCotacoes = new CopyOnWriteArrayList<>();
 
     public List<Cotacao> buscarUltimasCotacoes() {
         atualizarCotacoes();
-        return cacheList;
+        return listaCotacoes;
     }
 
     public void atualizarCotacoes() {
@@ -30,13 +30,13 @@ public class CotacaoService {
         cal.set(Calendar.MILLISECOND, 0);
         Date hoje1330 = cal.getTime();
 
-        if (cacheList.isEmpty()
-            || cacheList.get(0).getData().before(new Date())
+        if (listaCotacoes.isEmpty()
+            || listaCotacoes.get(0).getData().before(new Date())
             || (LocalTime.now().isAfter(LocalTime.of(13, 30)) 
-                && cacheList.get(0).getAtualizado().before(hoje1330))) {
-            cacheList.clear();            
-            CotacoesCotrirosaScraper.carregarCotacoes(cacheList);
-            CotacoesCoopermilScraper.carregarCotacoes(cacheList);            
+                && listaCotacoes.get(0).getAtualizado().before(hoje1330))) {
+            listaCotacoes.clear();            
+            CotacoesCotrirosaScraper.carregarCotacoes(listaCotacoes);
+            CotacoesCoopermilScraper.carregarCotacoes(listaCotacoes);            
         }
     }    
 
