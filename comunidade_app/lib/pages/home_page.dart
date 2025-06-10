@@ -1,3 +1,4 @@
+import 'package:comunidade_app/pages/avisos_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_page.dart';
@@ -99,7 +100,7 @@ class HomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                     ),
-                    onPressed: onCotacoesPressed, 
+                    onPressed: () => mostrarCotacoes(context), 
                     child: const Text(
                       '📈  Cotações agrícolas',
                       // '🌾🌱  Cotações agrícolas',
@@ -123,7 +124,7 @@ class HomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),                      
                     ),
-                    onPressed: onAvisosPressed, 
+                    onPressed: () => mostrarAvisos(context), 
                     child: const Text(
                       '📢  Avisos',
                       style: TextStyle(
@@ -159,12 +160,15 @@ class HomePage extends StatelessWidget {
     print('Previsão do tempo pressionado');
   }
 
-  void onCotacoesPressed() {    
+  void mostrarCotacoes(BuildContext context) {
     print('Cotações pressionado');
   }
 
-  void onAvisosPressed() {    
-    print('Avisos pressionado');
+  void mostrarAvisos(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const AvisosPage()),
+    );
   }
 
 }
