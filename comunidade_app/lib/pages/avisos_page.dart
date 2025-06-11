@@ -22,17 +22,19 @@ class _AvisosPageState extends State<AvisosPage> {
 
   Future<void> carregarAvisos() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:8081/api/avisos'));
-      if (response.statusCode == 200) {
-        final List<dynamic> dados = json.decode(response.body);
-        setState(() {
-          avisos = dados.map((e) => Aviso.fromJson(e)).toList();
-          loading = false;
-        });
-      } else {
-        throw Exception('Erro ao buscar avisos');
+      
+      final response = await http.get(Uri.parse('http://10.0.2.2:8081/api/avisos'));      
+      if (response.statusCode != 200) {
+        throw Exception('Não foi possível buscar avisos');        
       }
-    } catch (e) {
+
+      final List<dynamic> dados = json.decode(response.body);
+      setState(() {
+        avisos = dados.map((e) => Aviso.fromJson(e)).toList();
+        loading = false;
+      });
+      
+    } catch (e) {      
       print('Erro: $e');
       setState(() {
         loading = false;

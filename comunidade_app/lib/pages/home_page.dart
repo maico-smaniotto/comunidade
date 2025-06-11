@@ -1,4 +1,5 @@
 import 'package:comunidade_app/pages/avisos_page.dart';
+import 'package:comunidade_app/pages/cotacoes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_page.dart';
@@ -161,7 +162,10 @@ class HomePage extends StatelessWidget {
   }
 
   void mostrarCotacoes(BuildContext context) {
-    print('Cotações pressionado');
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (_) => const CotacoesPage()),
+    );
   }
 
   void mostrarAvisos(BuildContext context) {
