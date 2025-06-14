@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.smaniotto</groupId>
-	<artifactId>comunidade-api</artifactId>
+	<artifactId>comunidade_api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>comunidade-api</name>
+	<name>comunidade_api</name>
 	<description>API de backend para a aplicação Minha Comunidade</description>
 	<url/>
 	<licenses>
