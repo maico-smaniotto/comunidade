@@ -1,5 +1,6 @@
 import 'package:comunidade_app/pages/avisos_page.dart';
 import 'package:comunidade_app/pages/cotacoes_page.dart';
+import 'package:comunidade_app/pages/previsao_tempo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_page.dart';
@@ -78,7 +79,7 @@ class HomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),
                     ),
-                    onPressed: onPrevisaoDoTempoPressed, 
+                    onPressed: () => mostrarPrevisaoTempo(context), 
                     child: Text(
                       '🌤️  Previsão do tempo',
                       style: TextStyle(
@@ -157,8 +158,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void onPrevisaoDoTempoPressed() {    
-    print('Previsão do tempo pressionado');
+  void mostrarPrevisaoTempo(BuildContext context) {    
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (_) => const PrevisaoTempoPage()),
+    );
   }
 
   void mostrarCotacoes(BuildContext context) {
