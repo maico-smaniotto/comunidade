@@ -25,12 +25,51 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
   PrevisaoDia? previsaoDepoisDeAmanha;
   List<PrevisaoHora> horasDepoisDeAmanha = [];
 
+  final ScrollController _scrollControllerHoje = ScrollController();
+  final ScrollController _scrollControllerAmanhaEDepois = ScrollController();
+  static const double itemHorarioLargura = 90;
+  static const double itemHorarioMargem = 5;
+
   bool carregando = true;
 
   @override
   void initState() {
     super.initState();
     carregarPrevisao();
+
+    // Espera o primeiro frame ser renderizado + atraso de 100ms para então rolar a lista posicionando na hora certa
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(milliseconds: 100), () {
+
+        if (_scrollControllerHoje.hasClients) {
+          // Posiciona na hora atual
+          final agora = DateTime.now();
+          final posicaoHora = agora.hour;
+
+          _scrollControllerHoje.animateTo(
+            posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeOut,
+          );
+        }
+
+        if (_scrollControllerAmanhaEDepois.hasClients) {
+          // Posiciona às 7 da manhã
+          final posicaoHora = 7;
+
+          _scrollControllerAmanhaEDepois.jumpTo(
+            posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
+          );
+        }
+      });
+    });
+
+  }
+
+  @override
+  void dispose() {
+    _scrollControllerHoje.dispose();
+    super.dispose();
   }
 
   Future<void> carregarPrevisao() async {
@@ -153,6 +192,7 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
                   SizedBox(
                     height: 180,
                     child: ListView.builder(
+                      controller: _scrollControllerHoje,
                       scrollDirection: Axis.horizontal,
                       itemCount: horasHoje.length,
                       itemBuilder: (_, i) {
@@ -202,6 +242,7 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
                   SizedBox(
                     height: 180,
                     child: ListView.builder(
+                      controller: _scrollControllerAmanhaEDepois,
                       scrollDirection: Axis.horizontal,
                       itemCount: horasAmanha.length,
                       itemBuilder: (_, i) {
@@ -251,14 +292,15 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
                   SizedBox(
                     height: 180,
                     child: ListView.builder(
+                      controller: _scrollControllerAmanhaEDepois,
                       scrollDirection: Axis.horizontal,
                       itemCount: horasDepoisDeAmanha.length,
                       itemBuilder: (_, i) {
                         final h = horasDepoisDeAmanha[i];
                         return Container(
                           height: 180,
-                          width: 90,
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          width: itemHorarioLargura,
+                          margin: const EdgeInsets.symmetric(horizontal: itemHorarioMargem),
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.blue.shade50,
