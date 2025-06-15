@@ -1,4 +1,5 @@
 import 'package:comunidade_app/models/aviso.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,7 +36,9 @@ class _AvisosPageState extends State<AvisosPage> {
       });
       
     } catch (e) {      
-      print('Erro: $e');
+      if (kDebugMode) {
+        debugPrint('Erro: $e');
+      }
       setState(() {
         loading = false;
       });

@@ -1,4 +1,5 @@
 import 'package:comunidade_app/models/cotacao.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -41,7 +42,9 @@ class _CotacoesPageState extends State<CotacoesPage> {
         loading = false;
       });
     } catch (e) {
-      print('Erro: $e');
+      if (kDebugMode) {
+        debugPrint('Erro: $e');
+      }
       setState(() {
         loading = false;
       });
@@ -78,7 +81,7 @@ class _CotacoesPageState extends State<CotacoesPage> {
                   initiallyExpanded: true,
                   children: entry.value.map((cotacao) {
                     return ListTile(
-                      title: Text(obterIcone(cotacao.produto) + '${cotacao.produto} - R\$ ${cotacao.preco.toStringAsFixed(2)}'),
+                      title: Text('${obterIcone(cotacao.produto)}${cotacao.produto} - R\$ ${cotacao.preco.toStringAsFixed(2)}'),
                       subtitle: Text('Atualizado em ${DateFormat('dd/MM/yyyy hh:mm').format(cotacao.atualizado.toLocal())}'),
                     );
                   }).toList(),
@@ -87,7 +90,6 @@ class _CotacoesPageState extends State<CotacoesPage> {
             }).toList(),
         ),
     );    
-  }
-  
+  } 
 
 }
