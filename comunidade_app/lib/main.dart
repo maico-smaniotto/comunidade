@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'pages/home_page.dart';
 
 void main() async {
+  await initializeDateFormatting('pt_BR', null); // Inicializa o locale
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();  // Login automático com usuário padrão
   try {

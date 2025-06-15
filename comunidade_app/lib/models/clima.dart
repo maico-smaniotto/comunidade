@@ -88,11 +88,13 @@ class ClimaAtual {
 }
 
 class PrevisaoDia {
+  final DateTime data;
   final double maxTemp;
   final double minTemp;
   final CondicaoClima condicao;
 
   PrevisaoDia({
+    required this.data,
     required this.maxTemp,
     required this.minTemp,
     required this.condicao
@@ -100,6 +102,7 @@ class PrevisaoDia {
 
   factory PrevisaoDia.fromJson(Map<String, dynamic> json) {
     return PrevisaoDia(
+      data: DateTime.parse(json['date']),
       maxTemp: json['day']['maxtemp_c'], 
       minTemp: json['day']['mintemp_c'], 
       condicao: CondicaoClima.fromJson(json['day']['condition'])
