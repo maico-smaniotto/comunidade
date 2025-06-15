@@ -36,34 +36,6 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
   void initState() {
     super.initState();
     carregarPrevisao();
-
-    // Espera o primeiro frame ser renderizado + atraso de 100ms para então rolar a lista posicionando na hora certa
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 100), () {
-
-        if (_scrollControllerHoje.hasClients) {
-          // Posiciona na hora atual
-          final agora = DateTime.now();
-          final posicaoHora = agora.hour;
-
-          _scrollControllerHoje.animateTo(
-            posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
-            duration: Duration(milliseconds: 500),
-            curve: Curves.easeOut,
-          );
-        }
-
-        if (_scrollControllerAmanhaEDepois.hasClients) {
-          // Posiciona às 7 da manhã
-          final posicaoHora = 7;
-
-          _scrollControllerAmanhaEDepois.jumpTo(
-            posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
-          );
-        }
-      });
-    });
-
   }
 
   @override
@@ -106,7 +78,34 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
         previsaoDepoisDeAmanha = depoisDeAmanha;
         horasDepoisDeAmanha = listaHorasDepoisDeAmanha;
         carregando = false;
-      });  
+      });
+
+      // Espera o primeiro frame ser renderizado + atraso de alguns ms para então rolar a lista posicionando na hora desejada
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration(milliseconds: 100), () {
+
+          if (_scrollControllerHoje.hasClients) {
+            // Posiciona na hora atual
+            final agora = DateTime.now();
+            final posicaoHora = agora.hour;
+
+            _scrollControllerHoje.animateTo(
+              posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          }
+
+          if (_scrollControllerAmanhaEDepois.hasClients) {
+            // Posiciona às 7 da manhã
+            final posicaoHora = 7;
+
+            _scrollControllerAmanhaEDepois.jumpTo(
+              posicaoHora * (itemHorarioLargura + itemHorarioMargem * 2),
+            );
+          }
+        });
+      }); 
     } catch (e) {
       if (kDebugMode) {
         debugPrint('Erro: $e');
