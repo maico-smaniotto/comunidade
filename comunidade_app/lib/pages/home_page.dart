@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(vertical: 16),                      
                     ),
-                    onPressed: () => mostrarAvisos(context), 
+                    onPressed: () => mostrarAvisos(context, isAdmin), 
                     child: const Text(
                       '📢  Avisos',
                       style: TextStyle(
@@ -172,10 +172,10 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void mostrarAvisos(BuildContext context) {
+  void mostrarAvisos(BuildContext context, bool isAdmin) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => const AvisosPage()),
+      MaterialPageRoute(builder: (_) => AvisosPage(isAdmin: isAdmin)),
     );
   }
 

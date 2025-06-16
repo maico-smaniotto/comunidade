@@ -1,11 +1,14 @@
 import 'package:comunidade_app/models/aviso.dart';
+import 'package:comunidade_app/pages/aviso_cadastro_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AvisosPage extends StatefulWidget {
-  const AvisosPage({super.key});
+  final bool isAdmin;
+
+  const AvisosPage({super.key, required this.isAdmin});
 
   @override
   State<AvisosPage> createState() => _AvisosPageState();
@@ -45,11 +48,30 @@ class _AvisosPageState extends State<AvisosPage> {
     }
   }
 
+  void _abrirCadastro(BuildContext context, {Aviso? aviso}) {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => AvisoCadastroPage(
+          aviso: aviso,
+        )
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Avisos'),
+        actions: [
+          if (widget.isAdmin)
+            IconButton(
+              onPressed: () => _abrirCadastro(context), 
+              icon: const Icon(Icons.add),
+              tooltip: 'Novo Aviso',
+            )
+        ],
       ),
       body: loading
         ? const Center(child: CircularProgressIndicator())
@@ -72,6 +94,12 @@ class _AvisosPageState extends State<AvisosPage> {
                     )
                   ],
                 ),
+                trailing: widget.isAdmin
+                  ? IconButton(
+                      onPressed: () => _abrirCadastro(context, aviso: aviso), 
+                      icon: const Icon(Icons.edit),
+                    )
+                  : null,
               ),
             );
           },

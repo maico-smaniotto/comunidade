@@ -1,13 +1,13 @@
 class Aviso {
-  final String id;
-  final DateTime cadastro;
+  final String? id;
+  final DateTime? cadastro;
   final DateTime validade;
   final String titulo;
   final String descricao;
 
   Aviso({
-    required this.id,
-    required this.cadastro,
+    this.id,
+    this.cadastro,
     required this.validade,
     required this.titulo,
     required this.descricao
@@ -21,6 +21,14 @@ class Aviso {
       titulo: json['titulo'], 
       descricao: json['descricao'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'validade': validade.toIso8601String(),
+      'titulo': titulo,
+      'descricao': descricao,
+    };
   }
 
 }
