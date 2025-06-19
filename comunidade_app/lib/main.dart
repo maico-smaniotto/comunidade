@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,9 @@ void main() async {
     );
   } catch (e) {
     // Silencia erro se usuário já estiver logado ou outro erro não crítico
-    print('Erro ao logar automaticamente: $e');
+    if (kDebugMode) {
+      debugPrint('Erro ao logar automaticamente: $e');
+    }
   }
 
   runApp(const MyApp());

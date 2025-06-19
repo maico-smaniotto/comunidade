@@ -1,4 +1,4 @@
 comunidade-api/src/main/resources/firebase-service-account.json
 comunidade_api/src/main/resources/firebase-service-account.json
 comunidade_app/android/app/google-services.json
-comunidade_api/src/main/resources/application.properties
+comunidade_api/src/main/resources/application-dev.properties

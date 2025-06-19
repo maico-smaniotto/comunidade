@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: comunidade-api
+    env: java
+    buildCommand: cd comunidade_api && ./mvnw clean package -DskipTests
+    startCommand: cd comunidade_api && java -jar target/comunidade_api-0.0.1-SNAPSHOT.jar
+    autoDeploy: true
+    envVars:
+      - key: FIREBASE_CONFIG_PATH
+        value: /etc/secrets/firebase-service-account.json
+      - key: WEATHERAPI_KEY
+        value: ${WEATHERAPI_KEY} # Definida no painel do Render
+
