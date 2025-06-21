@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../config.dart';
 
 class CotacoesPage extends StatefulWidget {
   const CotacoesPage({super.key});
@@ -25,7 +26,7 @@ class _CotacoesPageState extends State<CotacoesPage> {
   Future<void> carregarCotacoes() async {
     try {
       
-      final response = await http.get(Uri.parse('http://10.0.2.2:8081/api/cotacoes'));
+      final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/cotacoes'));
       if (response.statusCode != 200) {
         throw Exception('Não foi possível buscar cotações');
       }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../config.dart';
 
 class AvisosPage extends StatefulWidget {
   final bool isAdmin;
@@ -27,7 +28,7 @@ class _AvisosPageState extends State<AvisosPage> {
   Future<void> carregarAvisos() async {
     try {
       
-      final response = await http.get(Uri.parse('http://10.0.2.2:8081/api/avisos'));      
+      final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/avisos'));      
       if (response.statusCode != 200) {
         throw Exception('Não foi possível buscar avisos');        
       }

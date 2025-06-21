@@ -1,9 +1,9 @@
 import 'package:comunidade_app/models/aviso.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import '../config.dart';
 
 class AvisoCadastroPage extends StatefulWidget {
   final Aviso? aviso;
@@ -50,8 +50,8 @@ class _AvisoCadastroPageState extends State<AvisoCadastroPage> {
     );
 
     final url = isEdicao
-      ? 'http://10.0.2.2:8081/api/avisos/${aviso.id}'
-      : 'http://10.0.2.2:8081/api/avisos';
+      ? '${AppConfig.apiBaseUrl}/avisos/${aviso.id}'
+      : '${AppConfig.apiBaseUrl}/avisos';
 
     final response = isEdicao
       ? await http.put(

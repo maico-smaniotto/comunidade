@@ -2,9 +2,9 @@ import 'package:comunidade_app/models/clima.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import '../config.dart';
 
 class PrevisaoTempoPage extends StatefulWidget {
   const PrevisaoTempoPage({super.key});
@@ -46,7 +46,7 @@ class _PrevisaoTempoPageState extends State<PrevisaoTempoPage> {
 
   Future<void> carregarPrevisao() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:8081/api/tempo'));
+      final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/tempo'));
 
       if (response.statusCode != 200) {
         throw Exception('Não foi possível buscar a previsão do tempo');
